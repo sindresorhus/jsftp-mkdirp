@@ -1,0 +1,46 @@
+{
+  "name": "jsftp-mkdirp",
+  "version": "0.0.0",
+  "description": "Recursively create nested directories with jsftp, like mkdirp",
+  "license": "MIT",
+  "repository": "sindresorhus/jsftp-mkdirp",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "ftp",
+    "jsftp",
+    "file",
+    "transfer",
+    "protocol",
+    "server",
+    "client",
+    "upload",
+    "deploy",
+    "deployment",
+    "mkdirp",
+    "dir",
+    "directory",
+    "directories",
+    "folder"
+  ],
+  "dependencies": {
+    "parents": "0.0.2"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "ftp-test-server": "0.0.1",
+    "jsftp": "~1.2.1"
+  }
+}
