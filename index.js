@@ -16,6 +16,10 @@ function mkdirp(dir, cb) {
 		dirs.pop();
 	}
 
+	if (dirs.length === 0) {
+		return cb();
+	}
+
 	var mkdir = function (dir) {
 		dir = dir.replace(/\\/g, '/');
 		this.raw.mkd(dir, function (err) {
