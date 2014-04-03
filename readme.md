@@ -1,4 +1,4 @@
-# jsftp-mkdirp [![Build Status](https://travis-ci.org/sindresorhus/jsftp-mkdirp.png?branch=master)](http://travis-ci.org/sindresorhus/jsftp-mkdirp)
+# jsftp-mkdirp [![Build Status](https://travis-ci.org/sindresorhus/jsftp-mkdirp.svg?branch=master)](https://travis-ci.org/sindresorhus/jsftp-mkdirp)
 
 > Recursively create nested directories with [jsftp](https://github.com/sergi/jsftp), like [mkdirp](https://github.com/substack/node-mkdirp)
 
@@ -9,14 +9,12 @@ Useful for being able to upload files to deep paths without knowing if the direc
 
 ## Install
 
-Install with [npm](https://npmjs.org/package/jsftp-mkdirp)
-
-```
-npm install --save jsftp-mkdirp
+```bash
+$ npm install --save jsftp-mkdirp
 ```
 
 
-## Example
+## Usage
 
 ```js
 var JSFtp = require('jsftp');
@@ -57,4 +55,4 @@ Function to be called when done or error.
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
