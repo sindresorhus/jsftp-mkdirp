@@ -4,7 +4,7 @@ var fs = require('fs');
 var JSFtp = require('jsftp');
 var Server = require('ftp-test-server');
 
-JSFtp = require('./index')(JSFtp);
+JSFtp = require('./')(JSFtp);
 
 var ftp;
 var mockServer;

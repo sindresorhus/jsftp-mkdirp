@@ -9,7 +9,7 @@ Useful for being able to upload files to deep paths without knowing if the direc
 
 ## Install
 
-```bash
+```sh
 $ npm install --save jsftp-mkdirp
 ```
 
@@ -41,13 +41,13 @@ ftp.mkdirp(path, function (err) {
 #### path
 
 *Required*  
-Type: `String`
+Type: `string`
 
 Path of the nested directories you want to create.
 
 #### callback(error)
 
-Type: `Function`  
+Type: `function`  
 Default: `function () {}`
 
 Function to be called when done or error.
@@ -55,4 +55,4 @@ Function to be called when done or error.
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](http://sindresorhus.com)
