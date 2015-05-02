@@ -3,6 +3,7 @@ var assert = require('assert');
 var fs = require('fs');
 var JSFtp = require('jsftp');
 var Server = require('ftp-test-server');
+var pathExists = require('path-exists');
 
 JSFtp = require('./')(JSFtp);
 
@@ -45,7 +46,7 @@ it('should decorate JSFtp', function () {
 
 it('should create nested directories', function (done) {
 	ftp.mkdirp(testDir, function (err) {
-		assert(fs.existsSync(__dirname + testDir));
+		assert(pathExists.sync(__dirname + testDir));
 		done();
 	});
 });
