@@ -3,7 +3,7 @@ var parents = require('parents');
 
 function mkdirp(dir, cb) {
 	if (typeof dir !== 'string') {
-		throw new Error('`path` is required.');
+		throw new Error('`path` is required');
 	}
 
 	cb = cb || function () {};

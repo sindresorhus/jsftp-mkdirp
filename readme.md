@@ -9,7 +9,7 @@ Useful for being able to upload files to deep paths without knowing if the direc
 
 ## Install
 
-```sh
+```
 $ npm install --save jsftp-mkdirp
 ```
 
@@ -25,10 +25,6 @@ JSFtp = require('jsftp-mkdirp')(JSFtp);
 var path = 'public_html/deploy/foo/bar';
 
 ftp.mkdirp(path, function (err) {
-	if (err) {
-		return cb(err);
-	}
-
 	console.log('Created path:', path);
 });
 ```
@@ -44,13 +40,6 @@ ftp.mkdirp(path, function (err) {
 Type: `string`
 
 Path of the nested directories you want to create.
-
-#### callback(error)
-
-Type: `function`  
-Default: `function () {}`
-
-Function to be called when done or error.
 
 
 ## License

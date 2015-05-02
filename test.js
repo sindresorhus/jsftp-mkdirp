@@ -1,4 +1,5 @@
 'use strict';
+var path = require('path');
 var assert = require('assert');
 var fs = require('fs');
 var JSFtp = require('jsftp');
@@ -11,7 +12,7 @@ var ftp;
 var mockServer;
 var testDir = '/foo/bar/baz';
 
-before(function (done) {
+before(function (cb) {
 	mockServer = new Server();
 
 	mockServer.init({
@@ -29,24 +30,25 @@ before(function (done) {
 			user: 'test',
 			pass: 'test'
 		});
-		done();
+
+		cb();
 	}, 500);
 });
 
 after(function () {
 	mockServer.stop();
-	fs.rmdirSync(__dirname + '/foo/bar/baz');
-	fs.rmdirSync(__dirname + '/foo/bar');
-	fs.rmdirSync(__dirname + '/foo');
+	fs.rmdirSync(path.join(__dirname, 'foo', 'bar', 'baz'));
+	fs.rmdirSync(path.join(__dirname, 'foo', 'bar'));
+	fs.rmdirSync(path.join(__dirname, 'foo'));
 });
 
 it('should decorate JSFtp', function () {
 	assert.equal(typeof ftp.mkdirp, 'function');
 });
 
-it('should create nested directories', function (done) {
+it('should create nested directories', function (cb) {
 	ftp.mkdirp(testDir, function (err) {
-		assert(pathExists.sync(__dirname + testDir));
-		done();
+		assert(pathExists.sync(path.join(__dirname, testDir)));
+		cb();
 	});
 });
