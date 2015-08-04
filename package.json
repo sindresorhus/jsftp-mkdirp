@@ -36,7 +36,8 @@
     "folder"
   ],
   "dependencies": {
-    "parents": "^1.0.0"
+    "parents": "^1.0.0",
+    "slash": "^1.0.0"
   },
   "devDependencies": {
     "ftp-test-server": "0.0.2",
