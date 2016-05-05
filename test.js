@@ -1,18 +1,19 @@
-'use strict';
-var path = require('path');
-var assert = require('assert');
-var fs = require('fs');
-var JSFtp = require('jsftp');
-var Server = require('ftp-test-server');
-var pathExists = require('path-exists');
+import path from 'path';
+import fs from 'fs';
+import test from 'ava';
+import JSFtpRaw from 'jsftp';
+import Server from 'ftp-test-server';
+import pathExists from 'path-exists';
+import delay from 'delay';
+import m from './';
 
-JSFtp = require('./')(JSFtp);
+const JSFtp = m(JSFtpRaw);
 
-var ftp;
-var mockServer;
-var testDir = '/foo/bar/baz';
+let ftp;
+let mockServer;
+const testDir = '/foo/bar/baz';
 
-before(function (cb) {
+test.before(async () => {
 	mockServer = new Server();
 
 	mockServer.init({
@@ -23,32 +24,32 @@ before(function (cb) {
 	mockServer.on('stdout', process.stdout.write.bind(process.stdout));
 	mockServer.on('stderr', process.stderr.write.bind(process.stderr));
 
-	setTimeout(function () {
-		ftp = new JSFtp({
-			host: 'localhost',
-			port: 3334,
-			user: 'test',
-			pass: 'test'
-		});
+	await delay(500);
 
-		cb();
-	}, 500);
+	ftp = new JSFtp({
+		host: 'localhost',
+		port: 3334,
+		user: 'test',
+		pass: 'test'
+	});
 });
 
-after(function () {
+test.after(() => {
 	mockServer.stop();
 	fs.rmdirSync(path.join(__dirname, 'foo', 'bar', 'baz'));
 	fs.rmdirSync(path.join(__dirname, 'foo', 'bar'));
 	fs.rmdirSync(path.join(__dirname, 'foo'));
 });
 
-it('should decorate JSFtp', function () {
-	assert.equal(typeof ftp.mkdirp, 'function');
+test('decorate JSFtp', t => {
+	t.is(typeof ftp.mkdirp, 'function');
 });
 
-it('should create nested directories', function (cb) {
-	ftp.mkdirp(testDir, function (err) {
-		assert(pathExists.sync(path.join(__dirname, testDir)));
-		cb();
-	});
+test('fail if no path is provided', t => {
+	t.throws(ftp.mkdirp(), '`path` is required');
+});
+
+test('create nested directories', async t => {
+	await ftp.mkdirp(testDir);
+	t.true(await pathExists(path.join(__dirname, testDir)));
 });
