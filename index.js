@@ -1,15 +1,14 @@
 'use strict';
-var parents = require('parents');
-var slash = require('slash');
+const parents = require('parents');
+const slash = require('slash');
+const pify = require('pify');
 
-function mkdirp(dir, cb) {
+function mkdirp(dir) {
 	if (typeof dir !== 'string') {
-		throw new Error('`path` is required');
+		return Promise.reject(new Error('`path` is required'));
 	}
 
-	cb = cb || function () {};
-
-	var dirs = parents(dir);
+	const dirs = parents(dir);
 
 	// skip root as it's always there
 	if (dirs[dirs.length - 1] === '/') {
@@ -17,38 +16,32 @@ function mkdirp(dir, cb) {
 	}
 
 	if (dirs.length === 0) {
-		return cb();
+		return Promise.resolve();
 	}
 
-	var mkdir = function (dir) {
+	const mkdir = dir => {
 		dir = slash(dir);
 
-		this.raw.mkd(dir, function (err) {
-			if (err && err.code === 550) {
-				if (dirs.length > 0) {
-					return mkdir(dirs.pop());
+		return pify(this.raw.mkd.bind(this.raw))(dir)
+			.then(() => dirs.length > 0 && mkdir(dirs.pop()))
+			.catch(err => {
+				if (err.code === 550) {
+					if (dirs.length > 0) {
+						return mkdir(dirs.pop());
+					}
+
+					return;
 				}
 
-				return cb();
-			}
+				err.message += ` - mkd: ${dir}`;
+				throw err;
+			});
+	};
 
-			if (err) {
-				err.message += ' - mkd: ' + dir;
-				return cb(err);
-			}
-
-			if (dirs.length > 0) {
-				return mkdir(dirs.pop());
-			}
-
-			cb();
-		});
-	}.bind(this);
-
-	mkdir(dirs.pop());
+	return mkdir(dirs.pop());
 }
 
-module.exports = function (JSFtp) {
+module.exports = JSFtp => {
 	JSFtp.prototype = Object.create(JSFtp.prototype, {
 		mkdirp: {
 			value: mkdirp

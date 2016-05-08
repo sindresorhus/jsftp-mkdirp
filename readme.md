@@ -17,14 +17,14 @@ $ npm install --save jsftp-mkdirp
 ## Usage
 
 ```js
-var JSFtp = require('jsftp');
+let JSFtp = require('jsftp');
 
 // decorate `JSFtp` with a new method `mkdirp`
 JSFtp = require('jsftp-mkdirp')(JSFtp);
 
-var path = 'public_html/deploy/foo/bar';
+const path = 'public_html/deploy/foo/bar';
 
-ftp.mkdirp(path, function (err) {
+ftp.mkdirp(path).then(() => {
 	console.log('Created path:', path);
 });
 ```
@@ -32,11 +32,12 @@ ftp.mkdirp(path, function (err) {
 
 ## API
 
-### JSFtp.mkdirp(path, callback)
+### JSFtp.mkdirp(path)
+
+Returns a Promise.
 
 #### path
 
-*Required*  
 Type: `string`
 
 Path of the nested directories you want to create.
@@ -44,4 +45,4 @@ Path of the nested directories you want to create.
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)
