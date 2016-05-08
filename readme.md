@@ -17,10 +17,10 @@ $ npm install --save jsftp-mkdirp
 ## Usage
 
 ```js
-let JSFtp = require('jsftp');
+const JSFtp = require('jsftp');
 
 // decorate `JSFtp` with a new method `mkdirp`
-JSFtp = require('jsftp-mkdirp')(JSFtp);
+require('jsftp-mkdirp')(JSFtp);
 
 const path = 'public_html/deploy/foo/bar';
 

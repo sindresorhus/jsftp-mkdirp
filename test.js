@@ -1,13 +1,13 @@
 import path from 'path';
 import test from 'ava';
-import JSFtpRaw from 'jsftp';
+import JSFtp from 'jsftp';
 import Server from 'ftp-test-server';
 import pathExists from 'path-exists';
 import delay from 'delay';
 import del from 'del';
 import m from './';
 
-const JSFtp = m(JSFtpRaw);
+m(JSFtp);
 
 let ftp;
 let mockServer;

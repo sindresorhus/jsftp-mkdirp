@@ -47,6 +47,4 @@ module.exports = JSFtp => {
 			value: mkdirp
 		}
 	});
-
-	return JSFtp;
 };
