@@ -25,12 +25,8 @@ function mkdirp(dir) {
 		return pify(this.raw.mkd.bind(this.raw))(dir)
 			.then(() => dirs.length > 0 && mkdir(dirs.pop()))
 			.catch(err => {
-				if (err.code === 550) {
-					if (dirs.length > 0) {
-						return mkdir(dirs.pop());
-					}
-
-					return;
+				if (err.code === 550 && dirs.length > 0) {
+					return mkdir(dirs.pop());
 				}
 
 				err.message += ` - mkd: ${dir}`;
