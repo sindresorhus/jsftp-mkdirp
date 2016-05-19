@@ -1,5 +1,5 @@
 'use strict';
-const parents = require('parents');
+const parentDirs = require('parent-dirs');
 const slash = require('slash');
 const pify = require('pify');
 
@@ -8,7 +8,7 @@ function mkdirp(dir) {
 		return Promise.reject(new Error('`path` is required'));
 	}
 
-	const dirs = parents(dir);
+	const dirs = parentDirs(dir);
 
 	// skip root as it's always there
 	if (dirs[dirs.length - 1] === '/') {

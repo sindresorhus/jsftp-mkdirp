@@ -36,7 +36,7 @@
     "folder"
   ],
   "dependencies": {
-    "parents": "^1.0.0",
+    "parent-dirs": "^0.1.0",
     "pify": "^2.3.0",
     "slash": "^1.0.0"
   },
