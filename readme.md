@@ -22,6 +22,10 @@ const JSFtp = require('jsftp');
 // decorate `JSFtp` with a new method `mkdirp`
 require('jsftp-mkdirp')(JSFtp);
 
+const ftp = new JSFtp({
+	host: 'myserver.com'
+});
+
 const path = 'public_html/deploy/foo/bar';
 
 ftp.mkdirp(path).then(() => {
