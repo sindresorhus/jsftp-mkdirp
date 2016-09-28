@@ -41,7 +41,7 @@
     "slash": "^1.0.0"
   },
   "peerDependencies": {
-    "jsftp": "^1.5.4",
+    "jsftp": "^1.5.4"
   },
   "devDependencies": {
     "ava": "*",
