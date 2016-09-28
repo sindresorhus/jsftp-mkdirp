@@ -40,6 +40,9 @@
     "pify": "^2.3.0",
     "slash": "^1.0.0"
   },
+  "peerDependencies": {
+    "jsftp": "^1.5.4",
+  },
   "devDependencies": {
     "ava": "*",
     "del": "^2.2.0",
