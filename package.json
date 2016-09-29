@@ -49,6 +49,9 @@
     "path-exists": "^2.0.0",
     "xo": "*"
   },
+  "peerDependencies": {
+    "jsftp": "^1.5.4"
+  },
   "xo": {
     "esnext": true
   }
