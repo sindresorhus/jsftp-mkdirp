@@ -40,12 +40,12 @@ function mkdirp(dir) {
 		return pify(this.raw.mlst.bind(this.raw))(dir)
 			.then(() => dirs.length > 0 && checkIfDirExists(dirs.pop()))
 			.catch(err => {
-				if (err.code !== 550 || dirs.length === 0) {
-					err.message += ` - mkd: ${dir}`;
-					throw err;
-				} else {
+				if (err.code === 550) {
 					return mkdir(dir);
 				}
+
+				err.message += ` - mkd: ${dir}`;
+				throw err;
 			});
 	};
 
