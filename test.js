@@ -51,3 +51,7 @@ test.serial('create nested directories', async t => {
 	await ftp.mkdirp(testDir);
 	t.true(await pathExists(path.join(__dirname, testDir)));
 });
+
+test.serial('mkdirp on directories that already exist', async t => {
+	t.notThrows(ftp.mkdirp(testDir));
+});

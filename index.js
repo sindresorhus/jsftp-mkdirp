@@ -34,7 +34,22 @@ function mkdirp(dir) {
 			});
 	};
 
-	return mkdir(dirs.pop());
+	const checkIfDirExists = dir => {
+		dir = slash(dir);
+
+		return pify(this.raw.mlst.bind(this.raw))(dir)
+			.then(() => dirs.length > 0 && checkIfDirExists(dirs.pop()))
+			.catch(err => {
+				if (err.code === 550) {
+					return mkdir(dir);
+				}
+
+				err.message += ` - mkd: ${dir}`;
+				throw err;
+			});
+	};
+
+	return checkIfDirExists(dirs.pop());
 }
 
 module.exports = JSFtp => {
