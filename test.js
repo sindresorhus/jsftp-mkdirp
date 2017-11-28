@@ -5,7 +5,7 @@ import Server from 'ftp-test-server';
 import pathExists from 'path-exists';
 import delay from 'delay';
 import del from 'del';
-import m from './';
+import m from '.';
 
 m(JSFtp);
 
@@ -43,8 +43,8 @@ test.serial('decorate JSFtp', t => {
 	t.is(typeof ftp.mkdirp, 'function');
 });
 
-test.serial('fail if no path is provided', t => {
-	t.throws(ftp.mkdirp(), '`path` is required');
+test.serial('fail if no path is provided', async t => {
+	await t.throws(ftp.mkdirp(), '`path` is required');
 });
 
 test.serial('create nested directories', async t => {
@@ -53,5 +53,5 @@ test.serial('create nested directories', async t => {
 });
 
 test.serial('mkdirp on directories that already exist', async t => {
-	t.notThrows(ftp.mkdirp(testDir));
+	await t.notThrows(ftp.mkdirp(testDir));
 });

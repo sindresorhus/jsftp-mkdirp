@@ -10,7 +10,7 @@ Useful for being able to upload files to deep paths without knowing if the direc
 ## Install
 
 ```
-$ npm install --save jsftp-mkdirp
+$ npm install jsftp-mkdirp
 ```
 
 
@@ -19,7 +19,7 @@ $ npm install --save jsftp-mkdirp
 ```js
 const JSFtp = require('jsftp');
 
-// decorate `JSFtp` with a new method `mkdirp`
+// Decorate `JSFtp` with a new method `mkdirp`
 require('jsftp-mkdirp')(JSFtp);
 
 const ftp = new JSFtp({
@@ -28,7 +28,8 @@ const ftp = new JSFtp({
 
 const path = 'public_html/deploy/foo/bar';
 
-ftp.mkdirp(path).then(() => {
+(async () => {
+	await ftp.mkdirp(path);
 	console.log('Created path:', path);
 });
 ```

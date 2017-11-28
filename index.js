@@ -10,7 +10,7 @@ function mkdirp(dir) {
 
 	const dirs = parentDirs(dir);
 
-	// skip root as it's always there
+	// Skip root as it's always there
 	if (dirs[dirs.length - 1] === '/') {
 		dirs.pop();
 	}
