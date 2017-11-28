@@ -44,7 +44,7 @@ function mkdirp(dir) {
 					return mkdir(dir);
 				}
 
-				err.message += ` - mkd: ${dir}`;
+				err.message += ` - mlst: ${dir}`;
 				throw err;
 			});
 	};
