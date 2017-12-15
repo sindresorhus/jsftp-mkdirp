@@ -22,7 +22,7 @@ function mkdirp(dir) {
 	const mkdir = dir => {
 		dir = slash(dir);
 
-		return pify(this.raw.mkd.bind(this.raw))(dir)
+		return pify(this.raw.bind(this))('mkd', dir)
 			.then(() => dirs.length > 0 && mkdir(dirs.pop()))
 			.catch(err => {
 				if (err.code === 550 && dirs.length > 0) {
@@ -37,7 +37,7 @@ function mkdirp(dir) {
 	const checkIfDirExists = dir => {
 		dir = slash(dir);
 
-		return pify(this.raw.mlst.bind(this.raw))(dir)
+		return pify(this.raw.bind(this))('mlst', dir)
 			.then(() => dirs.length > 0 && checkIfDirExists(dirs.pop()))
 			.catch(err => {
 				if (err.code === 550) {
