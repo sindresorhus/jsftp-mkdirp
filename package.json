@@ -45,11 +45,11 @@
 		"del": "^3.0.0",
 		"delay": "^2.0.0",
 		"ftp-test-server": "0.0.2",
-		"jsftp": "^2.0.0",
+		"jsftp": "^2.1.2",
 		"path-exists": "^3.0.0",
 		"xo": "*"
 	},
 	"peerDependencies": {
-		"jsftp": "^1.5.4"
+		"jsftp": "^2.1.2"
 	}
 }
