@@ -1,6 +1,6 @@
 {
 	"name": "jsftp-mkdirp",
-	"version": "3.0.1",
+	"version": "4.0.0",
 	"description": "Recursively create nested directories with jsftp, like mkdirp",
 	"license": "MIT",
 	"repository": "sindresorhus/jsftp-mkdirp",
