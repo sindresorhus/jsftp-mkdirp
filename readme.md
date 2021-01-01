@@ -1,4 +1,4 @@
-# jsftp-mkdirp [![Build Status](https://travis-ci.org/sindresorhus/jsftp-mkdirp.svg?branch=master)](https://travis-ci.org/sindresorhus/jsftp-mkdirp)
+# jsftp-mkdirp
 
 > Recursively create nested directories with [jsftp](https://github.com/sergi/jsftp), like [mkdirp](https://github.com/substack/node-mkdirp)
 
