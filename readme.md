@@ -6,48 +6,39 @@ FTP can natively create only one directory at the time.
 
 Useful for being able to upload files to deep paths without knowing if the directories exists beforehand.
 
-
 ## Install
 
 ```
 $ npm install jsftp-mkdirp
 ```
 
-
 ## Usage
 
 ```js
-const JSFtp = require('jsftp');
+import JsFtp from 'jsftp';
+import JsFtpMkdirp from 'jsftp-mkdirp';
 
 // Decorate `JSFtp` with a new method `mkdirp`
-require('jsftp-mkdirp')(JSFtp);
+JsFtpMkdirp(JSFtp);
 
-const ftp = new JSFtp({
+const ftp = new JsFtp({
 	host: 'myserver.com'
 });
 
 const path = 'public_html/deploy/foo/bar';
 
-(async () => {
-	await ftp.mkdirp(path);
-	console.log('Created path:', path);
-});
+await ftp.mkdirp(path);
+console.log('Created path:', path);
 ```
-
 
 ## API
 
-### JSFtp.mkdirp(path)
+### JsFtp.mkdirp(path)
 
-Returns a Promise.
+Returns a `Promise`.
 
 #### path
 
 Type: `string`
 
-Path of the nested directories you want to create.
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)
+The path of the nested directories you want to create.

@@ -1,61 +1,70 @@
-'use strict';
-const parentDirs = require('parent-dirs');
-const slash = require('slash');
-const pify = require('pify');
+import {promisify} from 'node:util';
+import parentDirs from 'parent-dirs';
+import slash from 'slash';
 
-function mkdirp(dir) {
-	if (typeof dir !== 'string') {
-		return Promise.reject(new Error('`path` is required'));
+async function mkdirp(directory) {
+	if (typeof directory !== 'string') {
+		throw new TypeError('`path` is required');
 	}
 
-	const dirs = parentDirs(dir);
+	const directories = parentDirs(directory);
 
-	// Skip root as it's always there
-	if (dirs[dirs.length - 1] === '/') {
-		dirs.pop();
+	// Skip root as it's always there.
+	if (directories[directories.length - 1] === '/') {
+		directories.pop();
 	}
 
-	if (dirs.length === 0) {
-		return Promise.resolve();
+	if (directories.length === 0) {
+		return;
 	}
 
-	const mkdir = dir => {
-		dir = slash(dir);
+	const mkdir = async directory => {
+		directory = slash(directory);
 
-		return pify(this.raw.bind(this))('mkd', dir)
-			.then(() => dirs.length > 0 && mkdir(dirs.pop()))
-			.catch(err => {
-				if (err.code === 550 && dirs.length > 0) {
-					return mkdir(dirs.pop());
-				}
+		try {
+			await promisify(this.raw.bind(this))('mkd', directory);
+		} catch (error) {
+			if (error.code === 550 && directories.length > 0) {
+				await mkdir(directories.pop());
+				return;
+			}
 
-				err.message += ` - mkd: ${dir}`;
-				throw err;
-			});
+			error.message += ` - mkd: ${directory}`;
+			throw error;
+		}
+
+		if (directories.length > 0) {
+			await mkdir(directories.pop());
+		}
 	};
 
-	const checkIfDirExists = dir => {
-		dir = slash(dir);
+	const checkIfDirectoryExists = async directory => {
+		directory = slash(directory);
 
-		return pify(this.raw.bind(this))('mlst', dir)
-			.then(() => dirs.length > 0 && checkIfDirExists(dirs.pop()))
-			.catch(err => {
-				if (err.code === 550) {
-					return mkdir(dir);
-				}
+		try {
+			await promisify(this.raw.bind(this))('mlst', directory);
+		} catch (error) {
+			if (error.code === 550) {
+				await mkdir(directory);
+				return;
+			}
 
-				err.message += ` - mlst: ${dir}`;
-				throw err;
-			});
+			error.message += ` - mlst: ${directory}`;
+			throw error;
+		}
+
+		if (directories.length > 0) {
+			await checkIfDirectoryExists(directories.pop());
+		}
 	};
 
-	return checkIfDirExists(dirs.pop());
+	await checkIfDirectoryExists(directories.pop());
 }
 
-module.exports = JSFtp => {
-	JSFtp.prototype = Object.create(JSFtp.prototype, {
+export default function jsFtpMkdirp(JsFtp) {
+	JsFtp.prototype = Object.create(JsFtp.prototype, {
 		mkdirp: {
-			value: mkdirp
-		}
+			value: mkdirp,
+		},
 	});
-};
+}

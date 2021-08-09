@@ -1,24 +1,29 @@
-import path from 'path';
+import process from 'node:process';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import test from 'ava';
 import JSFtp from 'jsftp';
 import Server from 'ftp-test-server';
 import pathExists from 'path-exists';
 import delay from 'delay';
 import del from 'del';
-import m from '.';
+import jsFtpMkdirp from './index.js';
 
-m(JSFtp);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-let ftp;
+jsFtpMkdirp(JSFtp);
+
+const testDirectory = '/foo/bar/baz';
+
 let mockServer;
-const testDir = '/foo/bar/baz';
+let ftp;
 
 test.before(async () => {
 	mockServer = new Server();
 
 	mockServer.init({
 		user: 'test',
-		pass: 'test'
+		pass: 'test',
 	});
 
 	mockServer.on('stdout', process.stdout.write.bind(process.stdout));
@@ -30,7 +35,7 @@ test.before(async () => {
 		host: 'localhost',
 		port: 3334,
 		user: 'test',
-		pass: 'test'
+		pass: 'test',
 	});
 });
 
@@ -44,14 +49,14 @@ test.serial('decorate JSFtp', t => {
 });
 
 test.serial('fail if no path is provided', async t => {
-	await t.throws(ftp.mkdirp(), '`path` is required');
+	await t.throwsAsync(ftp.mkdirp(), {message: '`path` is required'});
 });
 
 test.serial('create nested directories', async t => {
-	await ftp.mkdirp(testDir);
-	t.true(await pathExists(path.join(__dirname, testDir)));
+	await ftp.mkdirp(testDirectory);
+	t.true(await pathExists(path.join(__dirname, testDirectory)));
 });
 
 test.serial('mkdirp on directories that already exist', async t => {
-	await t.notThrows(ftp.mkdirp(testDir));
+	await t.notThrowsAsync(ftp.mkdirp(testDirectory));
 });
